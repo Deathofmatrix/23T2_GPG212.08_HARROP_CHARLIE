@@ -85,12 +85,12 @@ namespace Charlie.Utils
             return _cellSize;
         }
 
-        private Vector3 GetWorldPosition(int x, int y)
+        public Vector3 GetWorldPosition(int x, int y)
         {
             return new Vector3(x, y) * _cellSize + _originPosition;
         }
 
-        private void GetXY(Vector3 worldPosition, out int x, out int y)
+        public void GetXY(Vector3 worldPosition, out int x, out int y)
         {
             x = Mathf.FloorToInt((worldPosition - _originPosition).x / _cellSize);
             y = Mathf.FloorToInt((worldPosition - _originPosition).y / _cellSize);

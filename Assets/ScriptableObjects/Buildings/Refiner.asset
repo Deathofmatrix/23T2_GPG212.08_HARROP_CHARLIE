@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e00f0b1518b052b4ea04c965e3f072ed, type: 3}
+  m_Name: Refiner
+  m_EditorClassIdentifier: 
+  nameString: Refiner
+  prefab: {fileID: 4706627433304831113, guid: 592520a2743df704980fe253d8c4ca87, type: 3}
+  visual: {fileID: 6341074618241333169, guid: 111cd8d0b4216cf40a28590b20d2e810, type: 3}
+  width: 2
+  height: 2
