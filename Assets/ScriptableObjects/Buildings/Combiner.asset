@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Combiner
   m_EditorClassIdentifier: 
   nameString: Combiner
-  prefab: {fileID: 4706627433304831113, guid: c883e2febc519c14eb95729ce714a168, type: 3}
-  visual: {fileID: 8788474119343936962, guid: 24a453c5f2dc8204cb8f8a5e7e8d127c, type: 3}
-  width: 1
+  prefab: {fileID: 4706627433304831113, guid: 592520a2743df704980fe253d8c4ca87, type: 3}
+  visual: {fileID: 6341074618241333169, guid: 111cd8d0b4216cf40a28590b20d2e810, type: 3}
+  width: 2
   height: 2
+  buildingType: 3
+  generatorType: 0

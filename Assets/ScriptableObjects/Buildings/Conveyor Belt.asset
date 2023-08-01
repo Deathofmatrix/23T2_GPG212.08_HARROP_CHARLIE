@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e00f0b1518b052b4ea04c965e3f072ed, type: 3}
-  m_Name: Refiner
+  m_Name: Conveyor Belt
   m_EditorClassIdentifier: 
-  nameString: Refiner
-  prefab: {fileID: 4706627433304831113, guid: c883e2febc519c14eb95729ce714a168, type: 3}
-  visual: {fileID: 8788474119343936962, guid: 24a453c5f2dc8204cb8f8a5e7e8d127c, type: 3}
+  nameString: Conveyor Belt
+  prefab: {fileID: 4706627433304831113, guid: 523a6556b2d1e8e4c8d171d2052973d6, type: 3}
+  visual: {fileID: 6339060267153376251, guid: 0a102284ecd8c254cb4338ae09606882, type: 3}
   width: 1
-  height: 2
-  buildingType: 2
+  height: 1
+  buildingType: 4
   generatorType: 0

@@ -1,58 +1,78 @@
-//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Rendering;
 
-//namespace ChocolateFactory
-//{
-//    public class BuildingGhost : MonoBehaviour
-//    {
-//        private Transform visual;
-//        private PlacedObjectTypeSO placedObjectTypeSO;
+namespace ChocolateFactory
+{
+    public class BuildingGhost : MonoBehaviour
+    {
+        private Transform visual;
+        private PlacedObjectTypeSO placedObjectTypeSO;
 
-//        private void Start()
-//        {
-//            RefreshVisual();
+        private Color origionalColour;
 
-//            GridBuildingSystem.Instance.OnselectedChanged += Instance_OnSelectedChanged;
-//        }
+        private void Start()
+        {
+            RefreshVisual();
 
-//        private void Instance_OnSelectedChanged(object sender, System.EventArgs e)
-//        {
-//            RefreshVisual();
-//        }
+            GridBuildingSystem.Instance.OnSelectedChanged += Instance_OnSelectedChanged;
+        }
 
-//        private void LateUpdate()
-//        {
-//            Vector3 targetPosition = GridBuildingSystem.Instance.GetMouseWorldSnappedPosition();
-//            targetPosition.z = 1f;
-//            transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * 15f);
+        private void Instance_OnSelectedChanged(object sender, System.EventArgs e)
+        {
+            RefreshVisual();
+        }
 
-//            transform.rotation = Quaternion.Lerp(transform.rotation, GridBuildingSystem.Instance.GetPlacedObjectRotation(), Time.deltaTime * 15f);
-//        }
+        private void LateUpdate()
+        {
+            Vector3 targetPosition = (GridBuildingSystem.Instance.GetMouseWorldSnappedPosition());
+            transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * 15f);
 
-//        private void RefreshVisual()
-//        {
-//            if (visual != null)
-//            {
-//                Destroy(visual.gameObject);
-//                visual = null;
-//            }
+            transform.rotation = Quaternion.Lerp(transform.rotation, GridBuildingSystem.Instance.GetPlacedObjectRotation(), Time.deltaTime * 15f);
+            //Debug.Log(GridBuildingSystem.Instance.GetPlacedObjectRotation());
+        }
 
-//            PlacedObjectTypeSO placedObjectTypeSO = GridBuildingSystem.Instance.GetPlacedObjectTypeSO();
+        private void RefreshVisual()
+        {
+            if (visual != null)
+            {
+                Destroy(visual.gameObject);
+                visual = null;
+            }
 
-//            if (placedObjectTypeSO != null)
-//            {
-//                visual = Instantiate(placedObjectTypeSO.visual, Vector3.zero, Quaternion.identity);
-//                visual.parent = transform;
-//                visual.localPosition = Vector3.zero;
-//                visual.localEulerAngles = Vector3.zero;
-//                SetLayerRecursive(visual.gameObject, 11);
-//            }
-//        }
+            PlacedObjectTypeSO placedObjectTypeSO = GridBuildingSystem.Instance.GetPlacedObjectTypeSO();
 
-//        private void SetLayerRecursive(GameObject targetGameObject, int layer)
-//        {
+            if (placedObjectTypeSO != null)
+            {
+                visual = Instantiate(placedObjectTypeSO.visual, Vector3.zero, Quaternion.identity);
+                visual.parent = transform;
+                visual.localPosition = new Vector3(0,0,10);
+                visual.localEulerAngles = Vector3.zero;
 
-//        }
-//    }
-//}
+                visual.GetComponent<SortingGroup>().enabled = true;
+
+                Color newColor;
+
+                SpriteRenderer[] childrenSprite = GetComponentsInChildren<SpriteRenderer>();
+                foreach (SpriteRenderer spriteRenderer in childrenSprite)
+                {
+                    newColor = spriteRenderer.color;
+                    newColor.a = 0.5f;
+                    spriteRenderer.color = newColor;
+                }
+                
+                SetLayerRecursive(visual.gameObject, 11);
+            }
+        }
+
+        private void SetLayerRecursive(GameObject targetGameObject, int layer)
+        {
+            targetGameObject.layer = layer;
+            foreach (Transform child in targetGameObject.transform)
+            {
+                SetLayerRecursive(child.gameObject, layer);
+            }
+        }
+    }
+}

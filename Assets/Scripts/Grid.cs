@@ -8,6 +8,7 @@ using UnityEngine;
 
 namespace Charlie.Utils
 {
+    //Code Sourced Mostly from UnityCodeMonkey.com (Awesome Grid building System)
     public class Grid<TGridObject>
     {
 
@@ -45,7 +46,7 @@ namespace Charlie.Utils
                 }
             }
             
-            bool showDebug = true;
+            bool showDebug = false;
             if (showDebug)
             {
                 TextMesh[,] _debugTextArray = new TextMesh[width, height];

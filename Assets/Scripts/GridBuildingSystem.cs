@@ -1,27 +1,52 @@
 using Charlie.Utils;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.Experimental.AI;
 
 namespace ChocolateFactory
 {
+    //Code Sourced Mostly from UnityCodeMonkey.com (Awesome Grid building System)
     public class GridBuildingSystem : MonoBehaviour
     {
+        public static GridBuildingSystem Instance { get; private set; }
+
+        public event EventHandler OnSelectedChanged;
+        public event EventHandler OnObjectPlaced;
+
         [SerializeField] private List<PlacedObjectTypeSO> placedObjectTypeSOList;
         private PlacedObjectTypeSO placedObjectTypeSO;
 
         private Grid<GridObject> grid;
-        private PlacedObjectTypeSO.Dir dir = PlacedObjectTypeSO.Dir.Down;
+        private PlacedObjectTypeSO.Dir dir = PlacedObjectTypeSO.Dir.Up;
+
+        [SerializeField] private Transform gridCell;
 
         private void Awake()
         {
+            Instance = this;
+
             int gridWidth = 10;
             int gridHeight = 10;
             float cellsize = 10f;
             grid = new Grid<GridObject>(gridWidth, gridHeight, cellsize, Vector3.zero, (Grid<GridObject> g, int x, int y) => new GridObject(g, x, y));
 
-            placedObjectTypeSO = placedObjectTypeSOList[0];
+            placedObjectTypeSO = null;
+        }
+
+        private void Start()
+        {
+            for (int x = 0; x < grid.GetWidth(); x++)
+            {
+                for (int y = 0; y < grid.GetHeight(); y++)
+                {
+                    Transform tile = Instantiate(gridCell, grid.GetWorldPosition(x, y) + new Vector3(grid.GetCellSize(), grid.GetCellSize()) * 0.5f, Quaternion.identity);
+                    tile.SetParent(gameObject.transform);
+                }
+            }
         }
 
         public class GridObject
@@ -93,12 +118,14 @@ namespace ChocolateFactory
                     Vector2Int rotationOffset = placedObjectTypeSO.GetRotationOffset(dir);
                     Vector3 placedObjectWorldPosition = grid.GetWorldPosition(x, y) + new Vector3(rotationOffset.x, rotationOffset.y, 0) * grid.GetCellSize();
 
-                    PlacedObject placedObject = PlacedObject.Create(placedObjectWorldPosition, new Vector2Int(x, y), dir, placedObjectTypeSO);
+                    PlacedObject placedObject = PlacedObject.Create(placedObjectWorldPosition, new Vector2Int(x, y), dir, placedObjectTypeSO, this);
 
                     foreach(Vector2Int gridPosition in gridPositionList)
                     {
                         grid.GetGridObject(gridPosition.x, gridPosition.y).SetPlacedObject(placedObject);
                     }
+
+                    OnObjectPlaced?.Invoke(this, EventArgs.Empty);
                 }
                 else
                 {
@@ -131,9 +158,76 @@ namespace ChocolateFactory
                 Debug.Log(dir.ToString());
             }
 
-            if (Input.GetKeyUp(KeyCode.Alpha1)) { placedObjectTypeSO = placedObjectTypeSOList[0]; }
-            if (Input.GetKeyUp(KeyCode.Alpha2)) { placedObjectTypeSO = placedObjectTypeSOList[1]; }
-            if (Input.GetKeyUp(KeyCode.Alpha3)) { placedObjectTypeSO = placedObjectTypeSOList[2]; }
+            if (Input.GetKeyDown(KeyCode.Alpha1)) { placedObjectTypeSO = placedObjectTypeSOList[0]; RefreshSelectedObjectType(); }
+            if (Input.GetKeyDown(KeyCode.Alpha2)) { placedObjectTypeSO = placedObjectTypeSOList[1]; RefreshSelectedObjectType(); }
+            if (Input.GetKeyDown(KeyCode.Alpha3)) { placedObjectTypeSO = placedObjectTypeSOList[2]; RefreshSelectedObjectType(); }
+            if (Input.GetKeyDown(KeyCode.Alpha4)) { placedObjectTypeSO = placedObjectTypeSOList[3]; RefreshSelectedObjectType(); }
+            if (Input.GetKeyDown(KeyCode.Alpha5)) { placedObjectTypeSO = placedObjectTypeSOList[4]; RefreshSelectedObjectType(); }
+
+            if (Input.GetKeyDown(KeyCode.Alpha0)) { DeselectObjectType(); }
+        }
+
+        private void DeselectObjectType()
+        {
+            placedObjectTypeSO = null; RefreshSelectedObjectType();
+        }
+
+        private void RefreshSelectedObjectType()
+        {
+            OnSelectedChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+
+        public Vector2Int GetGridPosition(Vector3 worldPosition)
+        {
+            grid.GetXY(worldPosition, out int x, out int z);
+            return new Vector2Int(x, z);
+        }
+
+        public Vector3 GetMouseWorldSnappedPosition()
+        {
+            Vector3 mousePosition = UtilsClass.GetMouseWorldPosition();
+            grid.GetXY(mousePosition, out int x, out int y);
+
+            if (placedObjectTypeSO != null)
+            {
+                Vector2Int rotationOffset = placedObjectTypeSO.GetRotationOffset(dir);
+                Vector3 placedObjectWorldPosition = grid.GetWorldPosition(x, y) + new Vector3(rotationOffset.x, rotationOffset.y) * grid.GetCellSize();
+                return placedObjectWorldPosition;
+            }
+            else
+            {
+                return mousePosition;
+            }
+        }
+
+        public Quaternion GetPlacedObjectRotation()
+        {
+            if (placedObjectTypeSO != null)
+            {
+                return Quaternion.Euler(0, 0, placedObjectTypeSO.GetRotationAngle(dir));
+            }
+            else
+            {
+                return Quaternion.identity;
+            }
+        }
+
+        public PlacedObjectTypeSO GetPlacedObjectTypeSO()
+        {
+            return placedObjectTypeSO;
+        }
+
+        public PlacedObject GetPlacedObjectXY(int x, int y)
+        {
+            GridObject gridobject = grid.GetGridObject(x, y);
+            PlacedObject placedobject = gridobject.GetPlacedObject();
+            return placedobject;
+        }
+
+        public float GetCellSize()
+        {
+            return grid.GetCellSize();
         }
     }
 }
