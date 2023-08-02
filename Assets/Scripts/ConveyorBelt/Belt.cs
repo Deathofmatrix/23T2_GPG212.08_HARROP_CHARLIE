@@ -55,6 +55,7 @@ namespace ChocolateFactory
             {
                 StartCoroutine(StartBeltMove());
             }
+
         }
 
         public Vector3 GetItemPosition()

@@ -58,9 +58,9 @@ namespace ChocolateFactory
 
             if (inputBelt1 != null && inputBelt2 != null && !isBuildingRunning)
             {
-                if (inputBelt1.beltItem.item != null && inputBelt2.beltItem.item != null)
+                if (inputBelt1.beltItem != null && inputBelt1.beltItem.item != null && inputBelt2.beltItem != null && inputBelt2.beltItem.item != null)
                 {
-                    MoveItemsToMachine();
+                    StartCoroutine(MoveItemsToMachine());
                 }
             }
 
@@ -68,12 +68,53 @@ namespace ChocolateFactory
             {
                 CompareItems();
             }
+
+            if (outputBelt != null && !outputBelt.isSpaceTaken)
+            {
+                if (isBuildingRunning && !isBuildingInputting && !isBuildingProcessing)
+                {
+                    OutputItem();
+                }
+            }
         }
 
-        private void MoveItemsToMachine()
+        private IEnumerator MoveItemsToMachine()
         {
+            if (inputBelt1.beltItem == currentBeltItem1 || inputBelt2.beltItem == currentBeltItem2)
+            {
+                yield return null;
+            }
+
+            inputBelt1.isSpaceTaken = true; 
+            inputBelt2.isSpaceTaken = true;
+
             isBuildingInputting = true;
             isBuildingRunning = true;
+
+            currentBeltItem1 = inputBelt1.beltItem;
+            currentBeltItem2 = inputBelt2.beltItem;
+
+            currentBeltItem1.item.transform.parent = transform;
+            currentBeltItem2.item.transform.parent = transform;
+
+            var step = inputBelt1._beltManager.speed * Time.deltaTime;
+
+            while (currentBeltItem1.item.transform.position != itemMovePosition && currentBeltItem2.item.transform.position != itemMovePosition)
+            {
+                //Debug.Log("moving " + inputBelt.beltItem.item.transform.position);
+                currentBeltItem1.item.transform.position = Vector3.MoveTowards(currentBeltItem1.transform.position, itemMovePosition, step);
+                currentBeltItem2.item.transform.position = Vector3.MoveTowards(currentBeltItem2.transform.position, itemMovePosition, step);
+
+                yield return null;
+            }
+
+            inputBelt1.isSpaceTaken = false;
+            inputBelt2.isSpaceTaken = false;
+            currentBeltItem1.GetComponent<SpriteRenderer>().enabled = false;
+            currentBeltItem2.GetComponent<SpriteRenderer>().enabled = false;
+            currentBeltItem1.item.transform.parent = transform;
+            inputBelt1.beltItem = null;
+            inputBelt2.beltItem = null;
 
             //Check if belt is equal to inputbelt1 or inputbelt2 
             //if equal to inputbelt1 then check if currentbeltitem1 is null then do the same with inputbelt2
@@ -85,19 +126,18 @@ namespace ChocolateFactory
             //cahnge the parent to the combiner
             //set the .ispacetaken to false of both belts
             //set the belt item of both belts to null
-            //set isspacetaken of combiner to true
 
             isBuildingInputting = false;
         }
 
         private void CompareItems()
         {
-            isBuildingProcessing = true;
             if (isBuildingInputting) return;
+
+            isBuildingProcessing = true;
 
             //compare currentbetitem1 and currentbeltitem2 with the Database
             //Change ItemToProduce to the result
-
             ItemSO compareResult =
                 CraftingDatabase.CheckIfRecipieValid(
                     _placedObject.placedObjectTypeSO.buildingType,
@@ -105,18 +145,31 @@ namespace ChocolateFactory
                     currentBeltItem2.GetItemSO());
 
             itemToProduce = compareResult;
+
+            ChangeItems(itemToProduce);
+        }
+
+        private void ChangeItems(ItemSO newItemSO)
+        {
+            if (currentBeltItem1 == null || currentBeltItem2 == null) return;
+
+            currentBeltItem1.UpdateItemSO(newItemSO);
+            Destroy(currentBeltItem2.item);
+
             isBuildingProcessing = false;
         }
 
-        private void ChangeItems()
+        private void OutputItem()
         {
+            if (currentBeltItem1.GetItemSO() != itemToProduce) return;
 
-        }
+            currentBeltItem1.item.transform.position = outputBelt.GetItemPosition();
+            currentBeltItem1.GetComponent<SpriteRenderer>().enabled = true;
+            outputBelt.beltItem = currentBeltItem1;
+            currentBeltItem1 = null;
+            currentBeltItem2 = null;
+            itemToProduce = null;
 
-        private void OutputItems()
-        {
-            if (!isBuildingRunning && isBuildingProcessing) return;
-            //things
             isBuildingRunning = false;
         }
 

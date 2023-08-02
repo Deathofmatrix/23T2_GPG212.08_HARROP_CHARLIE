@@ -135,6 +135,7 @@ namespace ChocolateFactory
             BeltItem newitem = Instantiate(itemPrefab, beltInSequence.GetItemPosition(), Quaternion.identity, transform);
             newitem.UpdateItemSO(itemToProduce);
             beltInSequence.beltItem = newitem;
+            beltInSequence.isSpaceTaken = true;
         }
 
         public IEnumerator ProduceItem(float interval)

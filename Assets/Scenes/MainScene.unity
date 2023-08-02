@@ -163,9 +163,9 @@ MonoBehaviour:
   itemTest2: {fileID: 0}
   outputTest: {fileID: 0}
   outputSO: {fileID: 11400000, guid: 55f6b149fd1b7ed4d8ebdca8f854be65, type: 2}
-  outputTile: {x: 9, y: 5}
-  outputDir: 0
-  goalItem: {fileID: 11400000, guid: 2af6534e7a289fd4bbb34ae88e4c56dc, type: 2}
+  outputTile: {x: 7, y: 2}
+  outputDir: 3
+  goalItem: {fileID: 11400000, guid: 965b5b4473b47f443b2c5d3c4fb0abf6, type: 2}
 --- !u!4 &198900361
 Transform:
   m_ObjectHideFlags: 0
