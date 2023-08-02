@@ -23,7 +23,6 @@ namespace ChocolateFactory
 
         [SerializeField] private float itemInterval;
         public Belt beltInSequence;
-        public bool shouldProduceItems;
 
         private void Start()
         {
@@ -71,31 +70,31 @@ namespace ChocolateFactory
             }
         }
 
-        public Vector3 GetItemPosition()
-        {
-            Vector3 position = transform.position;
+        //public Vector3 GetItemPosition()
+        //{
+        //    Vector3 position = transform.position;
 
-            Vector3 centerOfPlacedObject = position;
+        //    Vector3 centerOfPlacedObject = position;
 
-            switch (_dir)
-            { 
-                case Dir.Up:
-                    centerOfPlacedObject = new Vector3(position.x + (cellSize / 2), position.y + (cellSize / 2));
-                    break;
-                case Dir.Right:
-                    centerOfPlacedObject = new Vector3(position.x + (cellSize / 2), position.y - (cellSize / 2));
-                    break;
-                case Dir.Down:
-                    centerOfPlacedObject = new Vector3(position.x - (cellSize / 2), position.y - (cellSize / 2));
-                    break;
-                case Dir.Left:
-                    centerOfPlacedObject = new Vector3(position.x - (cellSize / 2), position.y + (cellSize / 2));
-                    break;
-            }
+        //    switch (_dir)
+        //    { 
+        //        case Dir.Up:
+        //            centerOfPlacedObject = new Vector3(position.x + (cellSize / 2), position.y + (cellSize / 2));
+        //            break;
+        //        case Dir.Right:
+        //            centerOfPlacedObject = new Vector3(position.x + (cellSize / 2), position.y - (cellSize / 2));
+        //            break;
+        //        case Dir.Down:
+        //            centerOfPlacedObject = new Vector3(position.x - (cellSize / 2), position.y - (cellSize / 2));
+        //            break;
+        //        case Dir.Left:
+        //            centerOfPlacedObject = new Vector3(position.x - (cellSize / 2), position.y + (cellSize / 2));
+        //            break;
+        //    }
 
-            return centerOfPlacedObject;
+        //    return centerOfPlacedObject;
 
-        }
+        //}
 
         private Belt FindNextBelt()
         {
@@ -132,7 +131,7 @@ namespace ChocolateFactory
 
         public void SpawnItem()
         {
-            Debug.Log("spawn item");
+            //Debug.Log("spawn item");
             BeltItem newitem = Instantiate(itemPrefab, beltInSequence.GetItemPosition(), Quaternion.identity, transform);
             newitem.UpdateItemSO(itemToProduce);
             beltInSequence.beltItem = newitem;
@@ -140,18 +139,18 @@ namespace ChocolateFactory
 
         public IEnumerator ProduceItem(float interval)
         {
-            Debug.Log("CoroutineStarted");
+            //Debug.Log("CoroutineStarted");
             while (true)
             {
                 while (beltInSequence == null || beltInSequence.isSpaceTaken)
                 {
-                    Debug.Log("Waiting To Produce");
+                    //Debug.Log("Waiting To Produce");
                     yield return null;
                 }
 
-                Debug.Log("producing Item");
-                SpawnItem();
+                //Debug.Log("producing Item");
                 yield return new WaitForSeconds(interval);
+                SpawnItem();
             }
         }
     }

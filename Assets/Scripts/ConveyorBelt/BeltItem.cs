@@ -27,12 +27,17 @@ namespace ChocolateFactory
             UpdateItemSO(_itemSO);
         }
 
+        public ItemSO GetItemSO() => _itemSO;
+
         public void UpdateItemSO(ItemSO newItemSO)
         {
-            _itemSO = newItemSO;
-            _itemType = newItemSO.GetItemType();
-            _tier = newItemSO.GetItemTier();
-            name = $"{newItemSO.name} {currentItemID}";
+            if (newItemSO != null)
+            {
+                _itemSO = newItemSO;
+                _itemType = newItemSO.GetItemType();
+                _tier = newItemSO.GetItemTier();
+                name = $"{newItemSO.name} {currentItemID}";
+            }
         }
     }
 }

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameString: Cocoa Generator
   prefab: {fileID: 4706627433304831113, guid: ea716a16113667545b38389ef2cc555f, type: 3}
-  visual: {fileID: 8262410284988971961, guid: d2fb946fd9d5871448a62277b78b4927, type: 3}
+  visual: {fileID: 8262410284988971961, guid: 21fe1ff8d9dd2a0488a8c00f1b25cec9, type: 3}
   width: 1
   height: 1
   buildingType: 1

@@ -24,12 +24,20 @@ namespace ChocolateFactory
         private PlacedObjectTypeSO.Dir dir = PlacedObjectTypeSO.Dir.Up;
 
         [SerializeField] private Transform gridCell;
+        [SerializeField] private ItemSO itemTest1;
+        [SerializeField] private ItemSO itemTest2;
+        [SerializeField] private ItemSO outputTest;
+
+        [SerializeField] private PlacedObjectTypeSO outputSO;
+        [SerializeField] private Vector2 outputTile;
+        [SerializeField] private PlacedObjectTypeSO.Dir outputDir = PlacedObjectTypeSO.Dir.Up;
+        public ItemSO goalItem;
 
         private void Awake()
         {
             Instance = this;
 
-            int gridWidth = 10;
+            int gridWidth = 15;
             int gridHeight = 10;
             float cellsize = 10f;
             grid = new Grid<GridObject>(gridWidth, gridHeight, cellsize, Vector3.zero, (Grid<GridObject> g, int x, int y) => new GridObject(g, x, y));
@@ -45,6 +53,22 @@ namespace ChocolateFactory
                 {
                     Transform tile = Instantiate(gridCell, grid.GetWorldPosition(x, y) + new Vector3(grid.GetCellSize(), grid.GetCellSize()) * 0.5f, Quaternion.identity);
                     tile.SetParent(gameObject.transform);
+
+                    if (x == outputTile.x && y == outputTile.y)
+                    {
+                        List<Vector2Int> gridPositionList = outputSO.GetGridPositionList(new Vector2Int(x, y), outputDir);
+
+                        Vector2Int rotationOffset = outputSO.GetRotationOffset(outputDir);
+                        Vector3 placedObjectWorldPosition = grid.GetWorldPosition(x, y) + new Vector3(rotationOffset.x, rotationOffset.y, 0) * grid.GetCellSize();
+                        PlacedObject placedObject = PlacedObject.Create(placedObjectWorldPosition, new Vector2Int(x, y), outputDir, outputSO, this);
+
+                        foreach (Vector2Int gridPosition in gridPositionList)
+                        {
+                            grid.GetGridObject(gridPosition.x, gridPosition.y).SetPlacedObject(placedObject);
+                        }
+
+                        OnObjectPlaced?.Invoke(this, EventArgs.Empty);
+                    }
                 }
             }
         }
@@ -156,6 +180,11 @@ namespace ChocolateFactory
             {
                 dir = PlacedObjectTypeSO.GetNextDir(dir);
                 Debug.Log(dir.ToString());
+            }
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                outputTest = CraftingDatabase.CheckIfRecipieValid(PlacedObjectTypeSO.BuildingType.Combiner, itemTest1, itemTest2);
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha1)) { placedObjectTypeSO = placedObjectTypeSOList[0]; RefreshSelectedObjectType(); }

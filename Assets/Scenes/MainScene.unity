@@ -159,6 +159,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9049f14583e497d4c86b48a4336b8037, type: 2}
   - {fileID: 11400000, guid: b8172f550a6fe6442a13812896336e70, type: 2}
   gridCell: {fileID: 3634890281962694697, guid: 3e682c4d7cfff644dbddf35d3620eced, type: 3}
+  itemTest1: {fileID: 0}
+  itemTest2: {fileID: 0}
+  outputTest: {fileID: 0}
+  outputSO: {fileID: 11400000, guid: 55f6b149fd1b7ed4d8ebdca8f854be65, type: 2}
+  outputTile: {x: 9, y: 5}
+  outputDir: 0
+  goalItem: {fileID: 11400000, guid: 2af6534e7a289fd4bbb34ae88e4c56dc, type: 2}
 --- !u!4 &198900361
 Transform:
   m_ObjectHideFlags: 0
@@ -173,6 +180,109 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &422865197
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 422865199}
+  - component: {fileID: 422865198}
+  m_Layer: 0
+  m_Name: CraftingDatabase
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &422865198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 422865197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9b1b6c2dc1cd1547afa0c5d23685d0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  recipes:
+  - nameString: Chocolate
+    BuildingToCreate: 2
+    inputs:
+    - {fileID: 11400000, guid: 965b5b4473b47f443b2c5d3c4fb0abf6, type: 2}
+    output: {fileID: 11400000, guid: 2af6534e7a289fd4bbb34ae88e4c56dc, type: 2}
+  - nameString: Lollies
+    BuildingToCreate: 2
+    inputs:
+    - {fileID: 11400000, guid: 9fafc066756b9994dbd5dfbf53184d15, type: 2}
+    output: {fileID: 11400000, guid: be3d34640d8742e468cc33dce583a547, type: 2}
+  - nameString: Chocolate Milk
+    BuildingToCreate: 3
+    inputs:
+    - {fileID: 11400000, guid: 965b5b4473b47f443b2c5d3c4fb0abf6, type: 2}
+    - {fileID: 11400000, guid: 9fafc066756b9994dbd5dfbf53184d15, type: 2}
+    output: {fileID: 11400000, guid: b96421a7b15daf844bcc5ae608d0c959, type: 2}
+  - nameString: Milk Chocolate
+    BuildingToCreate: 3
+    inputs:
+    - {fileID: 11400000, guid: 9fafc066756b9994dbd5dfbf53184d15, type: 2}
+    - {fileID: 11400000, guid: 2af6534e7a289fd4bbb34ae88e4c56dc, type: 2}
+    output: {fileID: 11400000, guid: 60bd3944317f9cf439b8de2b5c90d0db, type: 2}
+  - nameString: Lickable Wallpaper
+    BuildingToCreate: 3
+    inputs:
+    - {fileID: 11400000, guid: 9fafc066756b9994dbd5dfbf53184d15, type: 2}
+    - {fileID: 11400000, guid: be3d34640d8742e468cc33dce583a547, type: 2}
+    output: {fileID: 11400000, guid: cfbbc3f3797267c47bda6fdf57ff8acb, type: 2}
+  - nameString: Dark Chocolate
+    BuildingToCreate: 3
+    inputs:
+    - {fileID: 11400000, guid: 965b5b4473b47f443b2c5d3c4fb0abf6, type: 2}
+    - {fileID: 11400000, guid: 2af6534e7a289fd4bbb34ae88e4c56dc, type: 2}
+    output: {fileID: 11400000, guid: 735b6677e3306094f8c8f600c7d66fdb, type: 2}
+  - nameString: Hair Toffee
+    BuildingToCreate: 3
+    inputs:
+    - {fileID: 11400000, guid: 965b5b4473b47f443b2c5d3c4fb0abf6, type: 2}
+    - {fileID: 11400000, guid: be3d34640d8742e468cc33dce583a547, type: 2}
+    output: {fileID: 11400000, guid: bd52a3f06a1725044b2d307c50eee6cb, type: 2}
+  - nameString: Toblerone
+    BuildingToCreate: 3
+    inputs:
+    - {fileID: 11400000, guid: 735b6677e3306094f8c8f600c7d66fdb, type: 2}
+    - {fileID: 11400000, guid: 60bd3944317f9cf439b8de2b5c90d0db, type: 2}
+    output: {fileID: 11400000, guid: bee4f519e6155384da6b0e20963d64e4, type: 2}
+  - nameString: Everlasting Gobstopper
+    BuildingToCreate: 3
+    inputs:
+    - {fileID: 11400000, guid: cfbbc3f3797267c47bda6fdf57ff8acb, type: 2}
+    - {fileID: 11400000, guid: bd52a3f06a1725044b2d307c50eee6cb, type: 2}
+    output: {fileID: 11400000, guid: 2535e4663f0aa924882831ec87d59a90, type: 2}
+  - nameString: Wonka Bar
+    BuildingToCreate: 3
+    inputs:
+    - {fileID: 11400000, guid: bee4f519e6155384da6b0e20963d64e4, type: 2}
+    - {fileID: 11400000, guid: 2535e4663f0aa924882831ec87d59a90, type: 2}
+    output: {fileID: 11400000, guid: af51afa92235bf6498c54c356dd8abd3, type: 2}
+--- !u!4 &422865199
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 422865197}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 47.13933, y: 24.9567, z: 2.749977}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &475580235
 GameObject:
@@ -491,6 +601,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1186499191
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1186499193}
+  - component: {fileID: 1186499192}
+  m_Layer: 0
+  m_Name: ScoreManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1186499192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1186499191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f797d2795cef134bbbe1e3c7923f807, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  score: 0
+--- !u!4 &1186499193
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1186499191}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 47.13933, y: 24.9567, z: 2.749977}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1221152817
 GameObject:

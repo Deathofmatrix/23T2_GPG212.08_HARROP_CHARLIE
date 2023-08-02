@@ -30,7 +30,7 @@ namespace ChocolateFactory
             Left,
         }
 
-        public enum BuildingType { Undefined, Generator, Refiner, Combiner, Belt }
+        public enum BuildingType { Undefined, Generator, Refiner, Combiner, Belt, WorldOutput }
         public enum GeneratorType { Undefined, Cocoa, Sugar }
 
         public string nameString;

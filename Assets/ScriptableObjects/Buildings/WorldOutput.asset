@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e00f0b1518b052b4ea04c965e3f072ed, type: 3}
-  m_Name: Sugar Generator
+  m_Name: WorldOutput
   m_EditorClassIdentifier: 
-  nameString: Sugar Generator
-  prefab: {fileID: 4706627433304831113, guid: 9218123e35f13bd43b6138048db9561e, type: 3}
-  visual: {fileID: 8262410284988971961, guid: d2fb946fd9d5871448a62277b78b4927, type: 3}
+  nameString: WorldOutput
+  prefab: {fileID: 4706627433304831113, guid: 9ac5a0a32f732114e85337f5984d63fb, type: 3}
+  visual: {fileID: 450160313876667774, guid: 9035832535bc1a04e81e74736271ceac, type: 3}
   width: 1
   height: 1
-  buildingType: 1
-  generatorType: 2
+  buildingType: 5
+  generatorType: 0

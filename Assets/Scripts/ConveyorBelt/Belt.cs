@@ -12,7 +12,7 @@ namespace ChocolateFactory
         public BeltItem beltItem;
         public bool isSpaceTaken;
 
-        private BeltManager _beltManager;
+        public BeltManager _beltManager;
 
         private LineRenderer _lineRenderer;
 
@@ -85,7 +85,7 @@ namespace ChocolateFactory
 
         private IEnumerator StartBeltMove()
         {
-            Debug.Log("BeltMoveStarted");
+            //Debug.Log("BeltMoveStarted");
             isSpaceTaken = true;
             beltItem.item.transform.parent = transform;
 
@@ -109,6 +109,29 @@ namespace ChocolateFactory
                 beltItem = null;
             }
         }
+
+        //public IEnumerator StartBeltMoveToBuilding(Vector3 toPosition)
+        //{
+        //    //Debug.Log("BeltMoveStarted");
+        //    isSpaceTaken = true;
+        //    beltItem.item.transform.parent = transform;
+
+        //    if (beltItem.item != null)
+        //    {
+        //        var step = _beltManager.speed * Time.deltaTime;
+
+        //        while (beltItem.item.transform.position != toPosition)
+        //        {
+        //            beltItem.item.transform.position = Vector3.MoveTowards(beltItem.transform.position, toPosition, step);
+
+        //            yield return null;
+        //        }
+
+        //        beltItem.GetComponent<SpriteRenderer>().enabled = false;
+        //        isSpaceTaken = false;
+        //        beltItem = null;
+        //    }
+        //}
 
         private Belt FindNextBelt()
         {
