@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static ChocolateFactory.PlacedObjectTypeSO;
 
 namespace ChocolateFactory
@@ -20,6 +22,11 @@ namespace ChocolateFactory
         private float cellSize;
 
         [SerializeField] private ItemSO _goalItem;
+        [SerializeField] private float _interval;
+        [SerializeField] private Transform itemLocation;
+        [SerializeField] private bool isDestroying;
+
+        [SerializeField] private bool isCoroutineRunning = false;
 
         private void IncreaseScore()
         {
@@ -41,11 +48,66 @@ namespace ChocolateFactory
                 _inputBelt = FindInputBelt();
             }
 
-            if (_inputBelt != null && _inputBelt.beltItem != null && _inputBelt.beltItem.item != null)
+            if (AreAllItemsAccountedFor())
+            {
+                StartCoroutine(DestroyItemDelay());
+            }
+        }
+
+        private bool AreAllItemsAccountedFor()
+        {
+            return _inputBelt && _inputBelt.beltItem && _inputBelt.beltItem.item;
+        }
+
+        private IEnumerator DestroyItemDelay()
+        {
+            if (isCoroutineRunning)
+            {
+                yield return null;
+            }
+
+            isCoroutineRunning = true;
+
+            if (!isDestroying)
+            {
+                float step = _inputBelt._beltManager.speed * Time.deltaTime;
+
+                //TODO Check if the Position to position move correctly(has to be exactly equal)
+
+                Debug.Log("_inputBelt is [" + _inputBelt + "].");
+                Debug.Log("_inputBelt.beltItem is [" + _inputBelt.beltItem + "].");
+                Debug.Log("_inputBelt.beltItem.item is [" + _inputBelt.beltItem.item + "].");
+                Debug.Log("itemLocation is [" + itemLocation + "].");
+
+                while (_inputBelt.beltItem.item.transform.position != itemLocation.position)
+                {
+                    _inputBelt.beltItem.item.transform.position = Vector3.MoveTowards(_inputBelt.beltItem.item.transform.position, itemLocation.position, step);
+
+                    yield return null;
+                }
+
+                isDestroying = true;
+            }
+            else
             {
                 DestroyItem();
             }
+
+            isCoroutineRunning = false;
+            yield return null;
         }
+
+        //private IEnumerator DestroyItemDelayTest()
+        //{
+        //    if (!isDestroying)
+        //    {
+        //        isDestroying = true;
+
+        //        yield return new WaitForSeconds(_interval);
+
+        //        DestroyItem();
+        //    }
+        //}
 
         private void DestroyItem()
         {
@@ -58,7 +120,7 @@ namespace ChocolateFactory
             Destroy(_inputBelt.beltItem.item);
             _inputBelt.beltItem = null;
             _inputBelt.isSpaceTaken = false;
-
+            isDestroying = false;
         }
 
 

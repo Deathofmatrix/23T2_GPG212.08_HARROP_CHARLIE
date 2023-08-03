@@ -159,12 +159,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9049f14583e497d4c86b48a4336b8037, type: 2}
   - {fileID: 11400000, guid: b8172f550a6fe6442a13812896336e70, type: 2}
   gridCell: {fileID: 3634890281962694697, guid: 3e682c4d7cfff644dbddf35d3620eced, type: 3}
-  itemTest1: {fileID: 0}
-  itemTest2: {fileID: 0}
+  itemTest1: {fileID: 11400000, guid: 2af6534e7a289fd4bbb34ae88e4c56dc, type: 2}
+  itemTest2: {fileID: 11400000, guid: 965b5b4473b47f443b2c5d3c4fb0abf6, type: 2}
   outputTest: {fileID: 0}
   outputSO: {fileID: 11400000, guid: 55f6b149fd1b7ed4d8ebdca8f854be65, type: 2}
-  outputTile: {x: 7, y: 2}
-  outputDir: 3
+  outputTile: {x: 9, y: 5}
+  outputDir: 2
   goalItem: {fileID: 11400000, guid: 965b5b4473b47f443b2c5d3c4fb0abf6, type: 2}
 --- !u!4 &198900361
 Transform:
@@ -251,6 +251,12 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 965b5b4473b47f443b2c5d3c4fb0abf6, type: 2}
     - {fileID: 11400000, guid: be3d34640d8742e468cc33dce583a547, type: 2}
     output: {fileID: 11400000, guid: bd52a3f06a1725044b2d307c50eee6cb, type: 2}
+  - nameString: Rocky Road
+    BuildingToCreate: 3
+    inputs:
+    - {fileID: 11400000, guid: be3d34640d8742e468cc33dce583a547, type: 2}
+    - {fileID: 11400000, guid: 2af6534e7a289fd4bbb34ae88e4c56dc, type: 2}
+    output: {fileID: 11400000, guid: 753e6e7dda8e7ca4893799bab01f4a10, type: 2}
   - nameString: Toblerone
     BuildingToCreate: 3
     inputs:
@@ -269,6 +275,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: bee4f519e6155384da6b0e20963d64e4, type: 2}
     - {fileID: 11400000, guid: 2535e4663f0aa924882831ec87d59a90, type: 2}
     output: {fileID: 11400000, guid: af51afa92235bf6498c54c356dd8abd3, type: 2}
+  incorrectCombinationOutput: {fileID: 11400000, guid: dea937e3e44b92248a821283fd1f44fc, type: 2}
 --- !u!4 &422865199
 Transform:
   m_ObjectHideFlags: 0

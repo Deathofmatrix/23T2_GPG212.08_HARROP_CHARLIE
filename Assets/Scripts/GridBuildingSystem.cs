@@ -182,6 +182,17 @@ namespace ChocolateFactory
                 Debug.Log(dir.ToString());
             }
 
+            if (Input.GetAxis("Mouse ScrollWheel") == 0.1f)
+            {
+                Debug.Log(Input.GetAxis("Mouse ScrollWheel"));
+                dir = PlacedObjectTypeSO.GetNextDir(dir);
+            }
+
+            if (Input.GetAxis("Mouse ScrollWheel") == -0.1f)
+            {
+                dir = PlacedObjectTypeSO.GetPreviousDir(dir);
+            }
+
             if (Input.GetKeyDown(KeyCode.E))
             {
                 outputTest = CraftingDatabase.CheckIfRecipieValid(PlacedObjectTypeSO.BuildingType.Combiner, itemTest1, itemTest2);

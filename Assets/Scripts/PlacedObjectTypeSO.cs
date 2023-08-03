@@ -21,6 +21,18 @@ namespace ChocolateFactory
             }
         }
 
+        public static Dir GetPreviousDir(Dir dir)
+        {
+            switch (dir)
+            {
+                default:
+                case Dir.Up:        return Dir.Left;
+                case Dir.Right:     return Dir.Up;
+                case Dir.Down:      return Dir.Right;
+                case Dir.Left:      return Dir.Down;
+            }
+        }
+
 
         public enum Dir
         {

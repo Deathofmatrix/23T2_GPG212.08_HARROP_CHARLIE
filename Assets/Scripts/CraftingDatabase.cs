@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 namespace ChocolateFactory
@@ -8,15 +9,19 @@ namespace ChocolateFactory
     {
         [SerializeField] private List<Recipe> recipes = new List<Recipe>();
         public static List<Recipe> StaticRecipes;
+
+        [SerializeField] private ItemSO incorrectCombinationOutput;
+        public static ItemSO incorrectCombinationOutputStatic;
         private void Awake()
         {
             StaticRecipes = null;
-            StaticRecipes = new List<Recipe>(recipes);
+            StaticRecipes = new List<Recipe>(recipes); // AG: I think this will simply replace the List; you might not need the line above that says "StaticRecipes = null;"
+            incorrectCombinationOutputStatic = incorrectCombinationOutput;
         }
 
         public static ItemSO CheckIfRecipieValid(PlacedObjectTypeSO.BuildingType buildingType, ItemSO itemInput1, ItemSO itemInput2)
         {
-            ItemSO itemToCraft = null;
+            ItemSO itemToCraft = incorrectCombinationOutputStatic;
 
             switch (buildingType)
             {
@@ -39,7 +44,7 @@ namespace ChocolateFactory
 
         public static ItemSO CheckRefinerRecipies(ItemSO itemInput)
         {
-            ItemSO itemToCraft = null;
+            ItemSO itemToCraft = incorrectCombinationOutputStatic;
             foreach(Recipe recipe in StaticRecipes)
             {
                 //Debug.Log(recipie.inputs[0]);
@@ -58,25 +63,38 @@ namespace ChocolateFactory
         {
             Debug.Log("started checking combinations");
 
-            ItemSO itemToCraft = null;
+            ItemSO itemToCraft = incorrectCombinationOutputStatic;
+
+            if (itemInput1 == itemInput2) return itemToCraft;
+
             foreach (Recipe recipe in StaticRecipes)
             {
-                if (recipe.BuildingToCreate == PlacedObjectTypeSO.BuildingType.Combiner)
-                {
-                    if (recipe.inputs[0] == itemInput1 || recipe.inputs[1] == itemInput1)
-                    {
-                        //Debug.Log("Input 1 = " + recipe.nameString);
-                        if (recipe.inputs[0] == itemInput2 || recipe.inputs[1] == itemInput2)
-                        {
-                            Debug.Log(recipe.output.ToString());
-                            //Debug.Log("FoundMatch" + recipie.inputs[0] + " " + itemInput);
-                            itemToCraft = recipe.output;
-                        }
-                    }
-                } 
+                if (recipe.BuildingToCreate != PlacedObjectTypeSO.BuildingType.Combiner) continue;
+                //Debug.Log("Building To create is Correct on " + recipe.nameString);
+                if (!AreInputsIdentical(recipe.inputs[0], itemInput1) && !AreInputsIdentical(recipe.inputs[1], itemInput1)) continue;
+                //Debug.Log("One Item is Correct on " + recipe.nameString);
+                if (!AreInputsIdentical(recipe.inputs[0], itemInput2) && !AreInputsIdentical(recipe.inputs[1], itemInput2)) continue;
+                //Debug.Log("Two items are Correct on " + recipe.nameString);
+
+
+                Debug.Log(recipe.output.ToString());
+                //Debug.Log("FoundMatch" + recipie.inputs[0] + " " + itemInput);
+                itemToCraft = recipe.output;
             }
 
             return itemToCraft;
+        }
+
+        public static bool AreInputsIdentical(ItemSO item1, ItemSO item2)
+        {
+            if (item1 == item2)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 
